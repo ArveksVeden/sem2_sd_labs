@@ -10,7 +10,7 @@ enum TokenType
 
 struct Token
 {
-    TokenType type;
+    enum TokenType type;
     char str[16];    // строковое представление токена
     double value;   // если это число - его значение
 };
