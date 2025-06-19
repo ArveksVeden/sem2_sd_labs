@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include "stack.h"
+
+int main(void)
+{
+    struct Stack s; // создаем сам стек
+    init_stack(&s); // инициализируем (обнуляем top)
+
+    // === проверка состояния стека после инициализации - пуст ===
+    if (is_stack_empty(&s))
+    {
+        printf("stack is empty\n");
+    } else {
+        printf("stack has elements\n");
+    }
+
+    push(&s, 3.14);
+    push(&s, 2.71);
+    push(&s, 1.41);
+
+    // === проверка заполнения стека + вывод через цикл ===
+    if (is_stack_empty(&s))
+    {
+        printf("stack is empty\n");
+    } else {
+        printf("stack has elements\n");
+    }
+
+    int i = 0;
+    struct StackNode* cur = s.top;
+    while (cur != NULL)
+    {
+        printf("[%d] value: %.3f | next: (value: %.3f)\n", i + 1, cur->value, (cur->next != NULL) ? cur->next->value : 0);
+        cur = cur->next;
+        i++;
+    }
+
+    // === проверка удаления и считывания данных из стека ===
+    printf("\npop value: %.3f\n", pop(&s)); // 1.41
+    printf("pop value: %.3f\n", pop(&s)); // 2.71
+    printf("pop value: %.3f\n", pop(&s)); // 3.14
+    printf("pop value: %.3f\n", pop(&s)); // warning - пустой стек
+
+    push(&s, 42.0);
+
+    // === проверка peek ===
+    printf("\npeek: %.3f\n", peek(&s));
+    printf("pop value: %.3f\n", pop(&s));
+    printf("peek: %.3f\n\n", peek(&s));
+
+    push(&s, 39.3);
+    push(&s, -1.6);
+    push(&s, 0.7);
+
+    // === проверка очищения стека ===
+    printf("is stack empty: %s\n", is_stack_empty(&s) ? "true" : "false");
+    free_stack(&s);
+    printf("is stack empty: %s\n", is_stack_empty(&s) ? "true" : "false");
+    return 0;
+}
