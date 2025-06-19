@@ -1,22 +1,24 @@
 #include <stdio.h>
-#include "stack.h"
-#include "tokenizer.h"
+#include <stdlib.h>
+#include "queue.h"
+#include <locale.h>
 
-int main(void)
-{
-    struct Stack s; // ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ ÑÐ°Ð¼ ÑÑ‚ÐµÐº
-    init_stack(&s); // Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ (Ð¾Ð±Ð½ÑƒÐ»ÑÐµÐ¼ top)
+int main() {
+    setlocale(LC_ALL, "ru_RU.UTF-8");
+    struct Queue q;
+    init_queue(&q); //front -> NULL <- rear
 
-    const char* expr = "sin(a)^2 + cos(b)^2";
-    struct Token tokens[100];
-    int count = tokenize(expr, tokens, 100);
-
-    for (int i = 0; i < count; i++)
+    enqueue(&q, 10); //front -> [10] <- rear
+    enqueue(&q, 20); //front -> [10] -> [20] <- rear
+    printf("Dequeue: %.2f\n", dequeue(&q)); // Äîëæíî âûâåñòè 10
+    printf("Dequeue: %.2f\n", dequeue(&q)); // Äîëæíî âûâåñòè 20
+    if (is_queue_empty(&q))
     {
-        printf("Token [%d]: type=%d, str=%s, value=%.3f\n", 
-                i, tokens[i].type, tokens[i].str, tokens[i].value);
+        printf("stack is empty\n");
     }
-
+    else {
+        printf("stack has elements\n");
+    }
 
     return 0;
 }
